@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://randomuser.me/api/?page=${page}&results=2`)
+    fetch(`https://randomuser.me/api/?page=${page}&results=10`)
       .then((res) => res.json())
       .then((data) => {
         setUsers((prevUsers) => {
@@ -48,57 +48,56 @@ const Home = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>UserListing</h1>
+    <div className={styles.box}>
+      <h2>Users</h2>
       <button className={styles.logout} onClick={logout}>
         Logout
       </button>
-      <div className={styles.list}>
-        <div className={styles.listHeader}>
-          <button className={styles.listHeaderItem}>Name</button>
-          <button className={styles.listHeaderItem}>Email</button>
-          <button className={styles.listHeaderItem}>Phone</button>
+
+      <div className={styles.data}>
+        <div className={styles.dataHeader}>
+          <button className={styles.dataHeaderItem}>Name</button>
+          <button className={styles.dataHeaderItem}>Email</button>
+          <button className={styles.dataHeaderItem}>Phone</button>
         </div>
-        <div className={styles.listBody}>
+        <div className={styles.dataBody}>
           {users.map((user, index) => {
             if (users.length === index + 1) {
               return (
                 <div
-                  className={styles.listItem}
+                  className={styles.dataItem}
                   key={user.email}
                   ref={lastUserElementRef}
                 >
                   <div className={styles.imgDiv}>
-                    <div className={styles.listItemName}>
+                    <div className={styles.dataItemName}>
                       <img src={user.picture.thumbnail} alt="user" />
                     </div>
-                    <div className={styles.listItemNameText}>
+                    <div className={styles.dataItemNameText}>
                       {user.name.first} {user.name.last}
                     </div>
                   </div>
-              
-                    <div className={styles.listItemEmail}>{user.email}</div>
-                  
-                 
-                    <div className={styles.listItemPhone}>{user.phone}</div>
-                  
+
+                  <div className={styles.dataItemEmail}>{user.email}</div>
+
+                  <div className={styles.dataItemPhone}>{user.phone}</div>
                 </div>
               );
             } else {
               return (
-                <div className={styles.listItem} key={user.email}>
+                <div className={styles.dataItem} key={user.email}>
                   <div className={styles.imgDiv}>
-                  <div className={styles.listItemName}>
-                    <img src={user.picture.thumbnail} alt="user" />
+                    <div className={styles.dataItemName}>
+                      <img src={user.picture.thumbnail} alt="user" />
+                    </div>
+                    <div className={styles.dataItemNameText}>
+                      Name: {user.name.first} {user.name.last}
+                    </div>
                   </div>
-                  <div className={styles.listItemNameText}>
-                    Name: {user.name.first} {user.name.last}
-                  </div>
-                  </div>
-                  <div className={styles.listItemEmail}>
+                  <div className={styles.dataItemEmail}>
                     Email: {user.email}
                   </div>
-                  <div className={styles.listItemPhone}>
+                  <div className={styles.dataItemPhone}>
                     Mobile: {user.phone}
                   </div>
                 </div>
@@ -108,7 +107,7 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.loader}>{loading && <Loader />}</div>
-      <div className={styles.error}>{error && "Error"}</div>
+      <div className={styles.error}>{error && "Something went wrong"}</div>
     </div>
   );
 };
